@@ -1,9 +1,9 @@
 import { $, component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
-import { BsXCircle } from '@qwikest/icons/bootstrap';
+import { BsBatteryCharging, BsCupHot, BsXCircle } from '@qwikest/icons/bootstrap';
 import { appWindow } from '@tauri-apps/api/window';
-import { actionContext } from '~/store';
-import RefreshButton from './refresh-button';
-import PomodoroCount from './pomodoro-count';
+import { actionContext, staticsContext, workTypeContext } from '~/store';
+import { changeAudio, playAudio } from '~/utils';
+import { WorkType } from '~/config';
 
 export const Appbar = component$(() => {
   const action = useContext(actionContext)
@@ -18,15 +18,29 @@ export const Appbar = component$(() => {
     action.value.close()  
   })
 
+  const workType = useContext(workTypeContext)
+  const statics = useContext(staticsContext)
+
+  console.log("render today count", statics.today)
+
+  const onClick = $(() => {
+    playAudio(changeAudio())
+  })
+
+  const className = "flex flex-row flex-none"
+  const iconClass = "cursor-pointer"
+
   return (
-    <div class="flex flex-row justify-between">
-      <div class="ml-1 mt-1">
-        <PomodoroCount />
+    <>
+      <div class="flex flex-row justify-between space-x-1 pt-1 px-1 text-sm">
+        <div class={className}>
+          {
+            workType.value === WorkType.Work ? <BsBatteryCharging class={iconClass} onClick$={onClick} /> : <BsCupHot class={iconClass} onClick$={onClick} />
+          }
+        </div>
+        <span class="text-xs" >{statics.total}/{statics.today}</span>
+        <BsXCircle class="cursor-pointer" onClick$={closeWindow} />
       </div>
-      <div class="flex flex-row justify-end mt-1 space-x-1 mr-1">
-        <RefreshButton />
-        <BsXCircle class="cursor-pointer text-xs" onClick$={closeWindow} />
-      </div>
-    </div>
+    </>
   )
 })

@@ -4,7 +4,6 @@ import { component$, useContext } from "@builder.io/qwik";
 
 export const TimeCounter = component$(() => {
   const count = useContext(countContext);
-  console.log("render TimeCounter", count.value);
 
   return (
     <div class="flex flex-col items-center font-black" data-tauri-drag-region>

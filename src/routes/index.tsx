@@ -10,8 +10,8 @@ import { addAudio, addEndAudio } from "~/utils";
 import { convertFileSrc } from "@tauri-apps/api/tauri"
 import { resolveResource } from "@tauri-apps/api/path"
 import { readTextFile } from "@tauri-apps/api/fs"
-import { Appbar } from "~/components/appbar";
 import { TimeCounter } from "~/components/time-counter";
+import { Appbar } from "~/components/appbar";
 import { Footbar } from "~/components/footbar";
 
 export default component$(() => {

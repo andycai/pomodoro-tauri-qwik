@@ -1,13 +1,10 @@
 import { component$, useContext, useVisibleTask$ } from "@builder.io/qwik"
 import { INTERVAL, Status } from "../config"
 import { playAudio, playEndAudio } from "../utils"
-import { actionContext, statusContext } from "~/store"
+import { actionContext, staticsContext, statusContext } from "~/store"
 import { BsPlayCircle, BsPauseCircle } from "@qwikest/icons/bootstrap"
 
-// let timeoutId: NodeJS.Timer | null
-
-export default component$(() => {
-  console.log("render Operaction")
+export const OperationButton = component$(() => {
   const status = useContext(statusContext)
   const action = useContext(actionContext)
 
@@ -27,7 +24,10 @@ export default component$(() => {
     cleanup(() => clearInterval(timeoutId))
   })
 
-  const className = "cursor-pointer text-xl"
+  const className = "cursor-pointer"
+  
+  const statics = useContext(staticsContext)
+  console.log("render Operaction", statics.today)
 
   return (
     <div>
