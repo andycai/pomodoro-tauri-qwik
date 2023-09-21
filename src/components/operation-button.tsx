@@ -27,11 +27,13 @@ export default component$(() => {
     cleanup(() => clearInterval(timeoutId))
   })
 
+  const className = "cursor-pointer text-xl"
+
   return (
-    <>
+    <div>
       {
-        (status.value == Status.Tick) ?  <BsPauseCircle class="cursor-pointer" style={{ fontSize: 20 }} onClick$={action.value.tick} /> : <BsPlayCircle class="cursor-pointer" style={{ fontSize: 20 }} onClick$={action.value.tick} />
+        (status.value == Status.Tick) ?  <BsPauseCircle class={className} onClick$={action.value.tick} /> : <BsPlayCircle class={className} onClick$={action.value.tick} />
       }
-    </>
+    </div>
   )
 })

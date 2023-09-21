@@ -22,10 +22,10 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![greet])
-        // .menu(tauri::Menu::os_default(&context.package_info().name))
-        .menu(Menu::default())
-        // .system_tray(tray::menu())
-        // .on_system_tray_event(tray::handler)
+        .menu(Menu::os_default(&context.package_info().name))
+        // .menu(Menu::default())
+        .system_tray(tray::menu())
+        .on_system_tray_event(tray::handler)
         .run(context)
         .expect("error while running tauri application");
 }

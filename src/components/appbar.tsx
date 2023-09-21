@@ -25,7 +25,7 @@ export const Appbar = component$(() => {
       </div>
       <div class="flex flex-row justify-end mt-1 space-x-1 mr-1">
         <RefreshButton />
-        <BsXCircle style={{ fontSize: 12 }} class="cursor-pointer" onClick$={closeWindow} />
+        <BsXCircle class="cursor-pointer text-xs" onClick$={closeWindow} />
       </div>
     </div>
   )

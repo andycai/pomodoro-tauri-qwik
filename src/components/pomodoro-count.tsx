@@ -15,10 +15,12 @@ export default component$(() => {
       playAudio(changeAudio())
     })
 
+    const iconClass = "cursor-pointer text-sm"
+
     return (
       <div class={className}>
         {
-          workType.value === WorkType.Work ? <BsBatteryCharging style={{ fontSize: 14 }} onClick$={onClick} /> : <BsCupHot style={{ fontSize: 12 }} onClick$={onClick} />
+          workType.value === WorkType.Work ? <BsBatteryCharging class={iconClass} onClick$={onClick} /> : <BsCupHot class={iconClass} onClick$={onClick} />
         }
         <span class="text-xs ml-1 pt-0" >{statics.total}/{statics.today}</span>
       </div>

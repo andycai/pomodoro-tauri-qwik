@@ -57,7 +57,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.dongshanju.pomodoro",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -81,18 +81,22 @@
     "updater": {
       "active": false
     },
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
     "windows": [
       {
         "label": "main",
         "fullscreen": false,
-        "resizable": false,
+        "resizable": true,
         "decorations": false,
         "alwaysOnTop": true,
         "contentProtected": false,
         "fileDropEnabled": false,
         "title": "Pomodoro",
         "width": 128,
-        "height": 192
+        "height": 196
       }
     ]
   }
