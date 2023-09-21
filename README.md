@@ -1,71 +1,41 @@
-# Qwik City App ⚡️
+# Pomodoro
+A simple pomodoro timer write in Tauri and Qwik.
 
-- [Qwik Docs](https://qwik.builder.io/)
-- [Discord](https://qwik.builder.io/chat)
-- [Qwik GitHub](https://github.com/BuilderIO/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+[Click to Download](https://github.com/andycai/pomodoro/releases)
 
----
+- [macOs](https://github.com/andycai/pomodoro/releases/download/v0.6.0/Pomodoro_0.6.0_x64.dmg)
+- [Windows](https://github.com/andycai/pomodoro/releases/download/v0.6.0/Pomodoro_0.6.0_x64-setup.exe)
+- [Linux](https://github.com/andycai/pomodoro/releases/download/v0.6.0/pomodoro_0.6.0_amd64.deb)
 
-## Project Structure
+## Screenshots
 
-This project is using Qwik with [QwikCity](https://qwik.builder.io/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
+<img src="./screenshots/screenshot.png" width="128" height="196" alt="Screenshot of Pomodoro">
 
-Inside your project, you'll see the following directory structure:
+<img src="./screenshots/screenshot_break.png" width="128" height="196" alt="Screenshot of Pomodoro">
 
-```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── ...
-```
+# Tauri + Qwik + Typescript
 
-- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.builder.io/qwikcity/routing/overview/) for more info.
+This template should help get you started developing with Tauri, Svelte and Typescript in Vite.
 
-- `src/components`: Recommended directory for components.
+## Recommended IDE Setup
 
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
+- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
 
-## Add Integrations and deployment
 
-Use the `npm run qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.builder.io/qwikcity/guides/static-site-generation/).
+## Install Tauri support
 
-```shell
-npm run qwik add # or `yarn qwik add`
+```bash
+pnpm i
 ```
 
-## Development
+## Run project
 
-Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
-
-```shell
-npm start # or `yarn start`
+```bash
+pnpm tauri dev
 ```
 
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
+## Build project
 
-## Preview
-
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
-
-```shell
-npm run preview # or `yarn preview`
-```
-
-## Production
-
-The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
-
-```shell
-npm run build # or `yarn build`
-```
-
-## Static Site Generator (Node.js)
-
-```
-npm run build.server
-```
+```bash
+pnpm tauri build
+`````
