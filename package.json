@@ -1,6 +1,7 @@
 {
-  "name": "my-qwik-basic-starter",
-  "description": "Demo App with Routing built-in (recommended)",
+  "name": "pomodoro",
+  "description": "A simple Pomodoro Timer",
+  "version": "0.7.0",
   "engines": {
     "node": ">=15.0.0"
   },
@@ -9,6 +10,7 @@
     "build": "qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.tsx",
+    "build.server": "vite build -c adapters/static/vite.config.ts",
     "build.types": "tsc --incremental --noEmit",
     "deploy": "echo 'Run \"npm run qwik add\" to install a server adapter'",
     "dev": "vite --mode ssr",
@@ -18,21 +20,30 @@
     "lint": "eslint \"src/**/*.ts*\"",
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
+    "tauri": "tauri",
     "qwik": "qwik"
   },
   "devDependencies": {
     "@builder.io/qwik": "^1.2.8",
     "@builder.io/qwik-city": "^1.2.8",
+    "@tauri-apps/cli": "^1.4.0",
     "@types/eslint": "8.44.1",
     "@types/node": "^20.4.5",
     "@typescript-eslint/eslint-plugin": "6.2.0",
     "@typescript-eslint/parser": "6.2.0",
+    "autoprefixer": "^10.4.14",
     "eslint": "8.45.0",
     "eslint-plugin-qwik": "^1.2.8",
+    "postcss": "8.4.27",
     "prettier": "3.0.0",
+    "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
     "undici": "5.22.1",
     "vite": "4.4.7",
     "vite-tsconfig-paths": "4.2.0"
+  },
+  "dependencies": {
+    "@qwikest/icons": "^0.0.8",
+    "@tauri-apps/api": "^1.4.0"
   }
 }
