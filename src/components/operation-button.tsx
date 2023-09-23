@@ -24,7 +24,7 @@ export const OperationButton = component$(() => {
   })
 
   return (
-    <button onClick$={action.value.tick} >
+    <button class="flex flex-row justify-center basis-1/2" title="Play or Pause" onClick$={action.value.tick} >
       {
         (status.value == Status.Tick) ?  <BsPauseCircle /> : <BsPlayCircle />
       }

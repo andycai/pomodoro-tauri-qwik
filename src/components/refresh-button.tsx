@@ -9,7 +9,7 @@ export const RefreshButton = component$(() => {
   const action = useContext(actionContext)
 
   return (
-    <button class="cursor-pointer" onClick$={action.value.reset}>
+    <button class="flex flex-row justify-end text-sm basis-1/4" title="Reset" onClick$={action.value.reset}>
     {
       status.value === Status.Pause || workType.value === WorkType.Break ? <BsArrowClockwise /> : ""
     }

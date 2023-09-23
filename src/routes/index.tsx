@@ -1,11 +1,11 @@
 import { $, component$, useComputed$, useContextProvider, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
-import { type Statics, actionContext, countContext, staticsContext, statusContext, workTypeContext } from "~/store";
+import { type Statics, actionContext, countContext, staticsContext, statusContext, workTypeContext, themeContext } from "~/store";
 import { DefaultBreakDuration, DefaultWorkDuration, Keys, Status, Tasks, WorkType, dataJsonURL, diAudioPaths, endAudioPaths } from "~/config";
 import { getIntDefault, initItem, saveItem } from "~/store/local";
 import { appWindow } from "@tauri-apps/api/window"
-import { ClassContainer, TextColors } from "~/style";
+import { ClassContainer, TextColors, themeNum } from "~/style";
 import { addAudio, addEndAudio } from "~/utils";
 import { convertFileSrc } from "@tauri-apps/api/tauri"
 import { resolveResource } from "@tauri-apps/api/path"
@@ -23,6 +23,7 @@ export default component$(() => {
     today: 0,
     total: 0
   })
+  const theme = useSignal(0)
 
   const action = useSignal({
     initData: $((td: number, tt: number, c: number) => {
@@ -75,6 +76,9 @@ export default component$(() => {
       workType.value = WorkType.Work
     }),
     close: $(()=>{
+    }),
+    changeTheme: $(() => {
+      theme.value = (theme.value + 1) % themeNum
     })
   })
 
@@ -83,11 +87,11 @@ export default component$(() => {
   useContextProvider(workTypeContext, workType)
   useContextProvider(staticsContext, statics)
   useContextProvider(actionContext, action)
+  useContextProvider(themeContext, theme)
 
   const className = useComputed$(() => {
-    const index = Math.floor(statics.today / 4)
     const arr = TextColors[workType.value]??TextColors[1]
-    const color = arr[index]??arr[4]
+    const color = arr[theme.value]??arr[0]
     return ClassContainer + color 
   })
 
