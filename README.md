@@ -9,9 +9,9 @@ A simple pomodoro timer write in Tauri and Qwik.
 
 ## Screenshots
 
-<img src="./screenshots/screenshot.png" width="128" height="196" alt="Screenshot of Pomodoro">
+<img src="./screenshots/screenshot.png" width="128" height="200" alt="Screenshot of Pomodoro">
 
-<img src="./screenshots/screenshot_break.png" width="128" height="196" alt="Screenshot of Pomodoro">
+<img src="./screenshots/screenshot_break.png" width="128" height="200" alt="Screenshot of Pomodoro">
 
 # Tauri + Qwik + Typescript
 
