@@ -1,12 +1,14 @@
-import { $, component$, useContext, useVisibleTask$ } from '@builder.io/qwik';
-import { BsBatteryCharging, BsCupHot, BsXCircle } from '@qwikest/icons/bootstrap';
+import { $, component$, useContext, useSignal, useVisibleTask$ } from '@builder.io/qwik';
+import { BsXCircle, BsVolumeMute, BsVolumeUp } from '@qwikest/icons/bootstrap';
 import { appWindow } from '@tauri-apps/api/window';
-import { actionContext, staticsContext, workTypeContext } from '~/store';
+import { Status } from '~/config';
+import { actionContext, staticsContext, statusContext } from '~/store';
 import { changeAudio, playAudio } from '~/utils';
-import { WorkType } from '~/config';
 
 export const Appbar = component$(() => {
   const action = useContext(actionContext)
+  const status = useContext(statusContext)
+  const musicOff = useSignal(false)
 
   useVisibleTask$(() => {
     action.value.close = $(() => {
@@ -18,19 +20,21 @@ export const Appbar = component$(() => {
     action.value.close()  
   })
 
-  const workType = useContext(workTypeContext)
   const statics = useContext(staticsContext)
 
   const onClick = $(() => {
-    playAudio(changeAudio())
+    if (status.value === Status.Tick) {
+      musicOff.value = !changeAudio()
+      playAudio(!musicOff.value)
+    }
   })
 
 
   return (
     <div class="flex flex-row justify-between space-x-1 pt-1 px-1 text-sm">
-      <button onClick$={onClick}>
+      <button title="Change Audio or Mute" onClick$={onClick}>
         {
-          workType.value === WorkType.Work ? <BsBatteryCharging /> : <BsCupHot />
+          musicOff.value ? <BsVolumeMute /> : <BsVolumeUp />
         }
       </button>
       <span class="text-xs" >{statics.total}/{statics.today}</span>

@@ -39,13 +39,10 @@ export const changeAudio = () => {
   if (needMute == true && (currentAudioIndex % diAudioPaths.length) == 0) {
     needMute = false
     currentAudioIndex--
-    // console.log("index1:", currentAudioIndex)
     return false
   }
   needMute = true
-  // console.log("", currentAudioIndex, diAudioPaths.length, currentAudioIndex % (diAudioPaths.length))
   currentAudioIndex = currentAudioIndex % (diAudioPaths.length)
-  // console.log("index2:", currentAudioIndex)
   return true
 }
 

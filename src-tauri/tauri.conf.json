@@ -89,14 +89,14 @@
       {
         "label": "main",
         "fullscreen": false,
-        "resizable": true,
+        "resizable": false,
         "decorations": false,
         "alwaysOnTop": true,
         "contentProtected": false,
         "fileDropEnabled": false,
         "title": "Pomodoro",
         "width": 128,
-        "height": 196
+        "height": 200
       }
     ]
   }
