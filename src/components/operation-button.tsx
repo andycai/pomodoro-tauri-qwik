@@ -2,7 +2,8 @@ import { component$, useContext, useVisibleTask$ } from "@builder.io/qwik"
 import { INTERVAL, Status } from "../config"
 import { playAudio, playEndAudio } from "../utils"
 import { actionContext, statusContext } from "~/store"
-import { BsPlayCircle, BsPauseCircle } from "@qwikest/icons/bootstrap"
+import { Pause } from "~/icons/pause"
+import { Play } from "~/icons/play"
 
 export const OperationButton = component$(() => {
   const status = useContext(statusContext)
@@ -26,7 +27,7 @@ export const OperationButton = component$(() => {
   return (
     <button class="flex flex-row justify-center basis-1/2" title="Play or Pause" onClick$={action.value.tick} >
       {
-        (status.value == Status.Tick) ?  <BsPauseCircle /> : <BsPlayCircle />
+        (status.value == Status.Tick) ?  <Pause width={22} height={22} /> : <Play width={22} height={22} />
       }
     </button>
   )

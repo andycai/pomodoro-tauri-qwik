@@ -1,7 +1,9 @@
 import { $, component$, useContext, useSignal, useVisibleTask$ } from '@builder.io/qwik';
-import { BsXCircle, BsVolumeMute, BsVolumeUp } from '@qwikest/icons/bootstrap';
 import { appWindow } from '@tauri-apps/api/window';
 import { Status } from '~/config';
+import { Close } from '~/icons/close';
+import { Volume } from '~/icons/volume';
+import { VolumeMute } from '~/icons/volume-mute';
 import { actionContext, staticsContext, statusContext } from '~/store';
 import { changeAudio, playAudio } from '~/utils';
 
@@ -29,17 +31,16 @@ export const Appbar = component$(() => {
     }
   })
 
-
   return (
-    <div class="flex flex-row justify-between space-x-1 pt-1 px-1 text-sm">
+    <div class="flex flex-row justify-between space-x-1 pt-1 px-1">
       <button title="Change Audio or Mute" onClick$={onClick}>
         {
-          musicOff.value ? <BsVolumeMute /> : <BsVolumeUp />
+          musicOff.value ? <VolumeMute width={16} height={16} /> : <Volume width={16} height={16} />
         }
       </button>
       <span class="text-xs" >{statics.total}/{statics.today}</span>
-      <button onClick$={closeWindow}>
-        <BsXCircle />
+      <button title="Close Window" onClick$={closeWindow}>
+        <Close />
       </button>
     </div>
   )

@@ -1,7 +1,7 @@
 import { Status, WorkType } from "~/config"
 import { component$, useContext } from "@builder.io/qwik"
 import { actionContext, statusContext, workTypeContext } from "~/store"
-import { BsArrowClockwise } from "@qwikest/icons/bootstrap"
+import { Refresh } from "~/icons/refresh"
 
 export const RefreshButton = component$(() => {
   const status = useContext(statusContext)
@@ -9,9 +9,9 @@ export const RefreshButton = component$(() => {
   const action = useContext(actionContext)
 
   return (
-    <button class="flex flex-row justify-end text-sm basis-1/4" title="Reset" onClick$={action.value.reset}>
+    <button class="flex flex-row justify-end basis-1/4" title="Reset" onClick$={action.value.reset}>
     {
-      status.value === Status.Pause || workType.value === WorkType.Break ? <BsArrowClockwise /> : ""
+      status.value === Status.Pause || workType.value === WorkType.Break ? <Refresh width={16} height={16} /> : ""
     }
     </button>
   )
