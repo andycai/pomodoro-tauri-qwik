@@ -1,7 +1,7 @@
 import { $, component$, useComputed$, useContextProvider, useSignal, useStore, useVisibleTask$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
-import { type Statics, actionContext, countContext, staticsContext, statusContext, workTypeContext, themeContext } from "~/store";
+import { type State, actionContext, countContext, stateContext, statusContext, workTypeContext, themeContext } from "~/store";
 import { DefaultBreakDuration, DefaultWorkDuration, Keys, MagicNumber, Status, Tasks, WorkType, dataJsonURL, diAudioPaths, endAudioPaths } from "~/config";
 import { getIntDefault, initItem, saveItem } from "~/store/local";
 import { appWindow } from "@tauri-apps/api/window"
@@ -18,40 +18,40 @@ export default component$(() => {
   const count = useSignal(0)
   const status = useSignal(Status.Idle)
   const workType = useSignal(WorkType.Work)
-  const statics = useStore<Statics>({
+  const theme = useSignal(0)
+  const state = useStore<State>({
     daykey: Keys.today(),
     today: 0,
     total: 0
   })
-  const theme = useSignal(0)
 
-  const action = useSignal({
+  const action = {
     initData: $((td: number, tt: number, c: number) => {
-      console.log("initData", td, tt, c)
       count.value = c
-      statics.today = td
-      statics.total = tt
+      state.today = td
+      state.total = tt
+      theme.value = Math.floor(td / MagicNumber)
     }),
     countdown: $(() => {
       if (count.value === 0) {
         status.value = Status.Idle
         if (workType.value === WorkType.Work) {
-          statics.today++
-          statics.total++
+          state.today++
+          state.total++
           workType.value = WorkType.Break
           count.value = getIntDefault(Keys.defaultBreakDuration, DefaultBreakDuration)
-          if (statics.today % MagicNumber === 0) {
+          if (state.today % MagicNumber === 0) {
             theme.value = (theme.value + 1) % themeNum
           }
           // 当天数量本地保存
-          if (statics.daykey === Keys.today()) { // 当天
-            saveItem(Keys.today(), statics.today.toString())
+          if (state.daykey === Keys.today()) { // 当天
+            saveItem(Keys.today(), state.today.toString())
           } else {
-            statics.daykey = Keys.today()
-            statics.today = 1 // 隔天更新
+            state.daykey = Keys.today()
+            state.today = 1 // 隔天更新
           }
           // 总数本地保存
-          saveItem(Keys.total(Tasks.default), statics.total.toString())
+          saveItem(Keys.total(Tasks.default), state.total.toString())
         } else {
           workType.value = WorkType.Work
           count.value = getIntDefault(Keys.defaultWorkDuration, DefaultWorkDuration)
@@ -77,12 +77,12 @@ export default component$(() => {
     changeTheme: $(() => {
       theme.value = (theme.value + 1) % themeNum
     })
-  })
+  }
 
   useContextProvider(countContext, count)
   useContextProvider(statusContext, status)
   useContextProvider(workTypeContext, workType)
-  useContextProvider(staticsContext, statics)
+  useContextProvider(stateContext, state)
   useContextProvider(actionContext, action)
   useContextProvider(themeContext, theme)
 
@@ -93,11 +93,11 @@ export default component$(() => {
   })
 
   useVisibleTask$(async () => {
-    action.value.close = $(() => {
+    action.close = $(() => {
       appWindow.close()
     })
 
-    action.value.initData(
+    action.initData(
       getIntDefault(Keys.today(), 0),
       getIntDefault(Keys.total(Tasks.default), 0),
       getIntDefault(Keys.defaultWorkDuration, DefaultWorkDuration)
@@ -109,7 +109,6 @@ export default component$(() => {
     initItem(Keys.defaultBreakDuration, data.defaultBreakDuration.toString())
 
     for (const v of diAudioPaths) {
-      // console.log("path: ", v)
       const audioPath = await resolveResource(v)
       const audio = new Audio(convertFileSrc(audioPath))
       audio.loop = true

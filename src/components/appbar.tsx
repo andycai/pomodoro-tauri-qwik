@@ -4,7 +4,7 @@ import { Status } from '~/config';
 import { Close } from '~/icons/close';
 import { Volume } from '~/icons/volume';
 import { VolumeMute } from '~/icons/volume-mute';
-import { actionContext, staticsContext, statusContext } from '~/store';
+import { actionContext, stateContext, statusContext } from '~/store';
 import { changeAudio, playAudio } from '~/utils';
 
 export const Appbar = component$(() => {
@@ -13,16 +13,16 @@ export const Appbar = component$(() => {
   const musicOff = useSignal(false)
 
   useVisibleTask$(() => {
-    action.value.close = $(() => {
+    action.close = $(() => {
       appWindow.close()
     })
   })
 
   const closeWindow = $(() => {
-    action.value.close()  
+    action.close()  
   })
 
-  const statics = useContext(staticsContext)
+  const state = useContext(stateContext)
 
   const onClick = $(() => {
     if (status.value === Status.Tick) {
@@ -38,7 +38,7 @@ export const Appbar = component$(() => {
           musicOff.value ? <VolumeMute width={16} height={16} /> : <Volume width={16} height={16} />
         }
       </button>
-      <span class="text-xs" >{statics.total}/{statics.today}</span>
+      <span class="text-xs" >{state.total}/{state.today}</span>
       <button title="Close Window" onClick$={closeWindow}>
         <Close />
       </button>

@@ -18,14 +18,14 @@ export const OperationButton = component$(() => {
   useVisibleTask$(({ cleanup }) => {
     const timeoutId = setInterval(() => {
       if (status.value === Status.Tick) {
-        action.value.countdown()
+        action.countdown()
       }
     }, INTERVAL)
     cleanup(() => clearInterval(timeoutId))
   })
 
   return (
-    <button class="flex flex-row justify-center basis-1/2" title="Play or Pause" onClick$={action.value.tick} >
+    <button class="flex flex-row justify-center basis-1/2" title="Play or Pause" onClick$={action.tick} >
       {
         (status.value == Status.Tick) ?  <Pause width={22} height={22} /> : <Play width={22} height={22} />
       }

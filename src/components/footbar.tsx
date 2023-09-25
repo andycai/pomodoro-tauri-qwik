@@ -9,14 +9,14 @@ export const Footbar = component$(() => {
   const action = useContext(actionContext)
 
   useVisibleTask$(() => {
-    action.value.close = $(() => {
+    action.close = $(() => {
       appWindow.close()
     })
   })
 
   return (
     <div class="flex flex-row items-end mt-2 px-1">
-      <button class="flex flex-row justify-start basis-1/4" title="Change Theme" onClick$={action.value.changeTheme}>
+      <button class="flex flex-row justify-start basis-1/4" title="Change Theme" onClick$={action.changeTheme}>
         <Palette />
       </button>
       <OperationButton />
