@@ -10,7 +10,7 @@ export enum WorkType {
   Break,
 }
 
-export const MagicNumber = 4 // 每天番茄数量颜色改变的间隔
+export const MagicNumber = 3 // 每天番茄数量颜色改变的间隔
 export const IconSize = 24
 
 export const INTERVAL = 1000

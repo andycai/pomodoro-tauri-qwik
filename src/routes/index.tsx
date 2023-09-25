@@ -2,7 +2,7 @@ import { $, component$, useComputed$, useContextProvider, useSignal, useStore, u
 import type { DocumentHead } from "@builder.io/qwik-city";
 
 import { type Statics, actionContext, countContext, staticsContext, statusContext, workTypeContext, themeContext } from "~/store";
-import { DefaultBreakDuration, DefaultWorkDuration, Keys, Status, Tasks, WorkType, dataJsonURL, diAudioPaths, endAudioPaths } from "~/config";
+import { DefaultBreakDuration, DefaultWorkDuration, Keys, MagicNumber, Status, Tasks, WorkType, dataJsonURL, diAudioPaths, endAudioPaths } from "~/config";
 import { getIntDefault, initItem, saveItem } from "~/store/local";
 import { appWindow } from "@tauri-apps/api/window"
 import { ClassContainer, TextColors, themeNum } from "~/style";
@@ -32,12 +32,6 @@ export default component$(() => {
       statics.today = td
       statics.total = tt
     }),
-    updateToday: $((c: number) => {
-      statics.today = c
-    }),
-    updateDaykey: $((key: string) => {
-      statics.daykey = key
-    }),
     countdown: $(() => {
       if (count.value === 0) {
         status.value = Status.Idle
@@ -46,6 +40,9 @@ export default component$(() => {
           statics.total++
           workType.value = WorkType.Break
           count.value = getIntDefault(Keys.defaultBreakDuration, DefaultBreakDuration)
+          if (statics.today % MagicNumber === 0) {
+            theme.value = (theme.value + 1) % themeNum
+          }
           // 当天数量本地保存
           if (statics.daykey === Keys.today()) { // 当天
             saveItem(Keys.today(), statics.today.toString())
