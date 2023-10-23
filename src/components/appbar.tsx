@@ -5,7 +5,7 @@ import { Close } from '~/icons/close';
 import { Volume } from '~/icons/volume';
 import { VolumeMute } from '~/icons/volume-mute';
 import { actionContext, stateContext, statusContext } from '~/store';
-import { changeAudio, playAudio } from '~/utils';
+import { changeAudio, isMute, playAudio } from '~/utils';
 
 export const Appbar = component$(() => {
   const action = useContext(actionContext)
@@ -26,7 +26,8 @@ export const Appbar = component$(() => {
 
   const onClick = $(() => {
     if (status.value === Status.Tick) {
-      musicOff.value = !changeAudio()
+      changeAudio()
+      musicOff.value = isMute()
       playAudio(!musicOff.value)
     }
   })
