@@ -10,9 +10,15 @@ import { addAudio, addEndAudio } from "~/utils";
 import { convertFileSrc } from "@tauri-apps/api/tauri"
 import { resolveResource } from "@tauri-apps/api/path"
 import { readTextFile } from "@tauri-apps/api/fs"
+import { listen } from '@tauri-apps/api/event'
 import { TimeCounter } from "~/components/time-counter";
 import { Appbar } from "~/components/appbar";
 import { Footbar } from "~/components/footbar";
+
+interface DurationPayload {
+  duration: number,
+  break: number,
+}
 
 export default component$(() => {
   const count = useSignal(0)
@@ -76,7 +82,15 @@ export default component$(() => {
     }),
     changeTheme: $(() => {
       theme.value = (theme.value + 1) % themeNum
-    })
+    }),
+    updateDuration: $(() => {
+        if (status.value == Status.Idle) {
+          if (workType.value == WorkType.Break) {
+            count.value = getIntDefault(Keys.defaultBreakDuration, DefaultBreakDuration)
+          }
+          count.value = getIntDefault(Keys.defaultWorkDuration, DefaultWorkDuration)
+        }
+    }), 
   }
 
   useContextProvider(countContext, count)
@@ -102,6 +116,18 @@ export default component$(() => {
       getIntDefault(Keys.total(Tasks.default), 0),
       getIntDefault(Keys.defaultWorkDuration, DefaultWorkDuration)
     )
+
+    await listen<DurationPayload>('event-change-duration', (event) => {
+      saveItem(Keys.defaultWorkDuration, (event.payload.duration*60).toString())
+      action.updateDuration()
+      // console.log("event:%s, payload:%s", event.event, event.payload.duration)
+    })
+
+    await listen<DurationPayload>('event-change-break', (event) => {
+      saveItem(Keys.defaultBreakDuration, (event.payload.break*60).toString())
+      action.updateDuration()
+      // console.log("event:%s, payload:%s", event.event, event.payload.break)
+    })
 
     const resourcePath = await resolveResource(dataJsonURL)
     const data = JSON.parse(await readTextFile(resourcePath))
